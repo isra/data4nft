@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const metadata = {
-  1: {
+const metadata = [
+  {
+    key: 1,
   	attibutes: [
   	  {
   	  	trait_type: 'Shape',
@@ -16,7 +17,8 @@ const metadata = {
   	image: 'https://i.imgur.com/jbqceVX.jpeg',
   	name: 'Bored Triangle'
   },
-  2: {
+  {
+    key: 2,
   	attibutes: [
   	  {
   	  	trait_type: 'Shape',
@@ -31,7 +33,8 @@ const metadata = {
   	image: 'https://i.imgur.com/Q0THwAr.jpeg',
   	name: 'Bored Rectangle'
   },
-  3: {
+  {
+    key: 3,
   	attibutes: [
   	  {
   	  	trait_type: 'Shape',
@@ -46,8 +49,9 @@ const metadata = {
   	image: 'https://i.imgur.com/byExR3k.jpeg',
   	name: 'Bored Circle'
   }
-};
+];
 
-export default function handler(req, res) {
-  res.status(200).json(metadata[req.query.id] || {message: 'Hello'});
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const item = metadata.find((item) => +req.query?.id === item.key);
+  res.status(200).json(item || {message: 'Hello'});
 }
