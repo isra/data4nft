@@ -51,7 +51,24 @@ const metadata = [
   }
 ];
 
+const defaultResponse = {
+    key: 3,
+    attibutes: [
+      {
+        trait_type: 'Shape',
+        value: 'Circle'
+      },
+      {
+        trait_type: 'Mood',
+        value: 'Bored'
+      }
+    ],
+    description: 'Sherk Mexicano',
+    image: 'https://${HOST}/sherk-buchon.jpeg',
+    name: 'El Sherk'
+};
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const item = metadata.find((item) => +req.query?.id === item.key);
-  res.status(200).json(item || {message: 'Hello'});
+  res.status(200).json(item || JSON.parse(JSON.stringify(defaultResponse).replace('${HOST}', req.headers.host)));
 }
