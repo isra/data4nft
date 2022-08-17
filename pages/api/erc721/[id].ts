@@ -70,5 +70,6 @@ const defaultResponse = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const item = metadata.find((item) => +req.query?.id === item.key);
-  res.status(200).json(item || JSON.parse(JSON.stringify(defaultResponse).replace('${HOST}', req.headers.host)));
+  const hostname = req?.headers?.host || '';
+  res.status(200).json(item || JSON.parse(JSON.stringify(defaultResponse).replace('${HOST}', hostname)));
 }
